@@ -15,9 +15,8 @@ minionsRouter.get("/", (req, res, next) => {
   const allMinions = getAllFromDatabase("minions");
   if (!allMinions) {
     return res.status(404).send("No minions found");
-  } 
-    res.status(200).send(allMinions);
-  
+  }
+  res.status(200).send(allMinions);
 });
 
 //POST /api/minions to create a new minion and save it to the database.
@@ -43,17 +42,17 @@ minionsRouter.get("/:minionId", (req, res, next) => {
 
 //PUT /api/minions/:minionId to update a single minion by id.
 minionsRouter.put("/:minionId", (req, res, next) => {
-const { name, title, salary } = req.body;
-if (!name || !title || !salary || isNaN(Number(salary))) {
+  const { name, title, salary } = req.body;
+  if (!name || !title || !salary || isNaN(Number(salary))) {
     return res.status(400).send("Incomplete data for Minion");
-}
-const minionId = req.params.minionId;
-const minion = { id: minionId, name, title, salary };
-const minionToUpdate = updateInstanceInDatabase('minions', minion);
-if (!minionToUpdate) {
-    return res.status(404).send('Minion not found');
-}
- res.status(200).send(minionToUpdate)
+  }
+  const minionId = req.params.minionId;
+  const minion = { id: minionId, name, title, salary };
+  const minionToUpdate = updateInstanceInDatabase("minions", minion);
+  if (!minionToUpdate) {
+    return res.status(404).send("Minion not found");
+  }
+  res.status(200).send(minionToUpdate);
 });
 
 //DELETE /api/minions/:minionId to delete a single minion by id.
@@ -62,9 +61,8 @@ minionsRouter.delete("/:minionId", (req, res, next) => {
   const minionToDelete = deleteFromDatabasebyId("minions", minionId);
   if (!minionToDelete) {
     return res.status(404).send("Minion not found");
-  } 
-    res.status(204).send();
-
+  }
+  res.status(204).send();
 });
 
 module.exports = minionsRouter;
